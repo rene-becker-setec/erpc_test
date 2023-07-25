@@ -1,0 +1,30 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "348723bf64e578d2f45327441c3f6598f4822d4aa80323911b6bf9208f33be1a"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_full_version": "3.10.6",
+            "python_version": "3.10"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "erpc": {
+            "hashes": [
+                "sha256:503e54f158598239b3b3284742a26c63fb9358be45133aa0a874a00ac52300df",
+                "sha256:a02831cf047c5c155b4ed440e65eadfe1512ce43dc4ec8e41deb12779e9d1070"
+            ],
+            "index": "pypi",
+            "version": "==1.10.0"
+        }
+    },
+    "develop": {}
+}

@@ -30,12 +30,12 @@ binary_t * RD_demoHello(const binary_t * txInput){
 }
 
 int main(int argc __attribute__((unused)), char *argv[] __attribute__((unused))) {
-    cout << "Welcome";
+    cout << "ERPC Test Server ..." << endl;
 
 	auto transport = erpc_transport_tcp_init("127.0.0.1", 5407, true);
 
 	// MessageBufferFactory initialization
-	cout << "initializing message buffer factory ..."; 
+	cout << "initializing message buffer factory ..." << endl; 
 	erpc_mbf_t message_buffer_factory = erpc_mbf_dynamic_init();
 	
 	// eRPC server initialization 
