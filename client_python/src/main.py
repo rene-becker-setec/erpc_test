@@ -9,8 +9,8 @@ if __name__ == '__main__':
 
     client_mngr = erpc.client.ClientManager(xport, erpc.basic_codec.BasicCodec)
 
-    client = example.example.client.DEMOClient(client_mngr)
-    response = client.RD_demoHello(b'hello world')
+    client = example.example.client.IoExpanderEmulatorClient(client_mngr)
+    response = client.sendCanMsg(b'hello world')
 
     print(f'server responded with {response}')
 

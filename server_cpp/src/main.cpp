@@ -19,8 +19,8 @@ static std::string now_str() {
 }
 
 /** The servicer end implements the interface method */
-binary_t * RD_demoHello(const binary_t * txInput){
-	cout << "RD_demoHello called" << endl;
+binary_t * sendCanMsg(const binary_t * txInput){
+	cout << "sendCanMsg called" << endl;
 	string o ((char*)txInput->data);
 	o.append("@").append(now_str());
 	auto ol = strlen(o.c_str());
@@ -45,7 +45,7 @@ int main(int argc __attribute__((unused)), char *argv[] __attribute__((unused)))
 	// Add the generated interface service DEMO to the server, 
 	// see the generated source file erpcdemo_server.h
 	cout << "adding service to server ..." << endl;
-	erpc_add_service_to_server(server, create_DEMO_service());
+	erpc_add_service_to_server(server, create_IoExpanderEmulator_service());
 
 	// Start the server 
 	cout << "starting erpcdemo server ..." << endl;
