@@ -1,6 +1,6 @@
 import time
 import erpc
-import example.example
+import example.example_pc2emu
 
 if __name__ == '__main__':
     print("Starting")
@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     client_mngr = erpc.client.ClientManager(xport, erpc.basic_codec.BasicCodec)
 
-    client = example.example.client.IoExpanderEmulatorClient(client_mngr)
+    client = example.example_pc2emu.client.IoExpanderEmulatorClient(client_mngr)
     response = client.sendCanMsg(b'hello world')
 
     print(f'server responded with {response}')

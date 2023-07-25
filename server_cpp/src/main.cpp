@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <sstream>
 #include <string.h>
-#include "example_server.h"
+#include "example_pc2emu_server.h"
 #include "erpc_transport_setup.h"
 #include <erpc_server_setup.h>
 
