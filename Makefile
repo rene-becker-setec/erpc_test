@@ -12,16 +12,21 @@ INCLUDE  := -Iinclude/ \
 			-I/home/rene/Projects/erpc/erpc_c/infra \
             -I/home/rene/Projects/erpc/erpc_c/port \
 			-I/home/rene/Projects/erpc/erpc_c/config \
-			-I/home/rene/Projects/erpc/erpc_c/transports
+			-I/home/rene/Projects/erpc/erpc_c/transports \
+			-I/home/rene/Projects/erpc/erpc_c/setup
 SRC      :=                      \
    $(wildcard src/*.cpp)         \
    $(GEN_DIR)/example_server.cpp \
    /home/rene/Projects/erpc/erpc_c/setup/erpc_setup_tcp.cpp \
+   /home/rene/Projects/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp \
+   /home/rene/Projects/erpc/erpc_c/setup/erpc_server_setup.cpp \
    /home/rene/Projects/erpc/erpc_c/transports/erpc_tcp_transport.cpp \
    /home/rene/Projects/erpc/erpc_c/infra/erpc_server.cpp \
    /home/rene/Projects/erpc/erpc_c/infra/erpc_framed_transport.cpp \
    /home/rene/Projects/erpc/erpc_c/infra/erpc_crc16.cpp \
    /home/rene/Projects/erpc/erpc_c/infra/erpc_message_buffer.cpp \
+   /home/rene/Projects/erpc/erpc_c/infra/erpc_simple_server.cpp \
+   /home/rene/Projects/erpc/erpc_c/infra/erpc_basic_codec.cpp \
    /home/rene/Projects/erpc/erpc_c/port/erpc_port_stdlib.cpp \
    /home/rene/Projects/erpc/erpc_c/port/erpc_threading_pthreads.cpp 
 

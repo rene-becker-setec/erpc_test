@@ -5,6 +5,8 @@
 #include <sstream>
 #include <string.h>
 #include "example_server.h"
+#include "erpc_transport_setup.h"
+#include <erpc_server_setup.h>
 
 using namespace std;
 
@@ -29,5 +31,30 @@ binary_t * RD_demoHello(const binary_t * txInput){
 
 int main(int argc __attribute__((unused)), char *argv[] __attribute__((unused))) {
     cout << "Welcome";
+
+	auto transport = erpc_transport_tcp_init("127.0.0.1", 5407, true);
+
+	// MessageBufferFactory initialization
+	cout << "initializing message buffer factory ..."; 
+	erpc_mbf_t message_buffer_factory = erpc_mbf_dynamic_init();
+	
+	// eRPC server initialization 
+	cout << "initializting server ..." << endl;
+	auto server = erpc_server_init(transport, message_buffer_factory);
+
+	// Add the generated interface service DEMO to the server, 
+	// see the generated source file erpcdemo_server.h
+	cout << "adding service to server ..." << endl;
+	erpc_add_service_to_server(server, create_DEMO_service());
+
+	// Start the server 
+	cout << "starting erpcdemo server ..." << endl;
+	erpc_server_run(server); /* or erpc_server_poll(); */
+
+	// Close the socket
+	erpc_transport_tcp_close();
+
+	return 0;
+
 }
 
