@@ -7,6 +7,7 @@
 #include "example_pc2emu_server.h"
 #include "erpc_transport_setup.h"
 #include <erpc_server_setup.h>
+#include <erpc_arbitrated_client_setup.h>
 
 using namespace std;
 
@@ -32,24 +33,29 @@ binary_t * sendCanMsg(const binary_t * txInput){
 int main(int argc __attribute__((unused)), char *argv[] __attribute__((unused))) {
     cout << "ERPC Test Server ..." << endl;
 
-	auto transport = erpc_transport_tcp_init("127.0.0.1", 5407, true);
+	erpc_transport_t arbitrator;
+	erpc_transport_t transport = erpc_transport_tcp_init("127.0.0.1", 5407, true);
 
 	// MessageBufferFactory initialization
-	cout << "initializing message buffer factory ..." << endl; 
+	cout << "initializing message buffer factory ..." << endl;
 	erpc_mbf_t message_buffer_factory = erpc_mbf_dynamic_init();
-	
-	// eRPC server initialization 
-	cout << "initializting server ..." << endl;
-	auto server = erpc_server_init(transport, message_buffer_factory);
 
-	// Add the generated interface service DEMO to the server, 
+	erpc_client_t client = erpc_arbitrated_client_init(transport, message_buffer_factory, &arbitrator);
+
+	// eRPC server initialization
+	cout << "initializting server ..." << endl;
+	auto server = erpc_server_init(arbitrator, message_buffer_factory);
+
+	// Add the generated interface service DEMO to the server,
 	// see the generated source file erpcdemo_server.h
 	cout << "adding service to server ..." << endl;
 	erpc_add_service_to_server(server, create_IoExpanderEmulator_service());
 
-	// Start the server 
+	// Start the server
 	cout << "starting erpcdemo server ..." << endl;
 	erpc_server_run(server); /* or erpc_server_poll(); */
+
+	cout << "server is running ..." << endl;
 
 	// Close the socket
 	erpc_transport_tcp_close();
@@ -57,4 +63,3 @@ int main(int argc __attribute__((unused)), char *argv[] __attribute__((unused)))
 	return 0;
 
 }
-

@@ -1,6 +1,6 @@
 CXX      := -c++
 #CXXFLAGS := -pedantic-errors -Wall -Wextra -Werror
-CXXFLAGS := -pedantic-errors -Wall 
+CXXFLAGS := -pedantic-errors -Wall
 LDFLAGS  := -L/usr/lib -lstdc++ -lm -pthread
 BUILD    := ./build
 OBJ_DIR  := $(BUILD)/objects
@@ -20,6 +20,7 @@ SRC      :=                      \
    /home/rene/Projects/erpc/erpc_c/setup/erpc_setup_tcp.cpp \
    /home/rene/Projects/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp \
    /home/rene/Projects/erpc/erpc_c/setup/erpc_server_setup.cpp \
+   /home/rene/Projects/erpc/erpc_c/setup/erpc_arbitrated_client_setup.cpp \
    /home/rene/Projects/erpc/erpc_c/transports/erpc_tcp_transport.cpp \
    /home/rene/Projects/erpc/erpc_c/infra/erpc_server.cpp \
    /home/rene/Projects/erpc/erpc_c/infra/erpc_framed_transport.cpp \
@@ -27,8 +28,11 @@ SRC      :=                      \
    /home/rene/Projects/erpc/erpc_c/infra/erpc_message_buffer.cpp \
    /home/rene/Projects/erpc/erpc_c/infra/erpc_simple_server.cpp \
    /home/rene/Projects/erpc/erpc_c/infra/erpc_basic_codec.cpp \
+   /home/rene/Projects/erpc/erpc_c/infra/erpc_arbitrated_client_manager.cpp \
+   /home/rene/Projects/erpc/erpc_c/infra/erpc_client_manager.cpp \
+   /home/rene/Projects/erpc/erpc_c/infra/erpc_transport_arbitrator.cpp \
    /home/rene/Projects/erpc/erpc_c/port/erpc_port_stdlib.cpp \
-   /home/rene/Projects/erpc/erpc_c/port/erpc_threading_pthreads.cpp 
+   /home/rene/Projects/erpc/erpc_c/port/erpc_threading_pthreads.cpp
 
 OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 DEPENDENCIES \
