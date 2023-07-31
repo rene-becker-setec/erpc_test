@@ -4,12 +4,16 @@
 #include <iomanip>
 #include <sstream>
 #include <string.h>
+#include<unistd.h>         
+#include "example_emu2pc.h"    
 #include "example_pc2emu_server.h"
 #include "erpc_transport_setup.h"
 #include <erpc_server_setup.h>
 #include <erpc_arbitrated_client_setup.h>
 
 using namespace std;
+
+bool remote_connected = false;
 
 /** Return the current time string */
 static std::string now_str() {
@@ -21,6 +25,7 @@ static std::string now_str() {
 
 /** The servicer end implements the interface method */
 binary_t * sendCanMsg(const binary_t * txInput){
+	remote_connected = true;
 	cout << "sendCanMsg called" << endl;
 	string o ((char*)txInput->data);
 	o.append("@").append(now_str());
@@ -30,7 +35,31 @@ binary_t * sendCanMsg(const binary_t * txInput){
 	return new binary_t{(uint8_t*)buf,(uint32_t)ol};
 }
 
+void *tfunc(void *ptr) {
+	uint32_t num_msg_sent = 0;
+	while (1) {
+		sleep(1);
+		cout << "client thread running ..." << endl;
+
+		if (remote_connected) {
+			char msg[100] = {0};
+			snprintf(msg, sizeof(msg), "CAN Message Received %d", num_msg_sent);
+			binary_t b = {(uint8_t*)msg,(uint32_t)strlen(msg)};
+			/* RPC call */
+			canMsgRcvd(&b);
+			cout << "send CAN Notification ..." << endl;
+			num_msg_sent++;
+		} else {
+			cout << "remote not connected ..." << endl;
+		}
+	}
+}
+
 int main(int argc __attribute__((unused)), char *argv[] __attribute__((unused))) {
+
+	pthread_t cthread;
+	int cthread_handle;
+
     cout << "ERPC Test Server ..." << endl;
 
 	erpc_transport_t arbitrator;
@@ -50,6 +79,8 @@ int main(int argc __attribute__((unused)), char *argv[] __attribute__((unused)))
 	// see the generated source file erpcdemo_server.h
 	cout << "adding service to server ..." << endl;
 	erpc_add_service_to_server(server, create_IoExpanderEmulator_service());
+
+	cthread_handle = pthread_create(&cthread, NULL, tfunc, NULL);
 
 	// Start the server
 	cout << "starting erpcdemo server ..." << endl;

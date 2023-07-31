@@ -1,6 +1,7 @@
 import time
 import erpc
 import logging
+import random
 import example.example_pc2emu as pc2emu
 import example.example_emu2pc as emu2pc
 
@@ -58,8 +59,12 @@ if __name__ == '__main__':
 
     LOGGER.info(f'server responded with {response}')
 
-    LOGGER.info("Sleeping for 5 seconds")
-    time.sleep(5)
+    for i in range(10):
+        sleep_duration = random.randint(1, 50)/10
+        LOGGER.info(f'Sleeping for {sleep_duration} seconds')
+        time.sleep(sleep_duration)
+        response = client.sendCanMsg(f'Injecting {i}'.encode())
+        LOGGER.info(f'server responded with {response}')
 
     LOGGER.info("Done")
 

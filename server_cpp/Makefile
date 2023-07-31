@@ -17,6 +17,7 @@ INCLUDE  := -Iinclude/ \
 SRC      :=                      \
    $(wildcard src/*.cpp)         \
    $(GEN_DIR)/example_pc2emu_server.cpp \
+   $(GEN_DIR)/example_emu2pc_client.cpp \
    /home/rene/Projects/erpc/erpc_c/setup/erpc_setup_tcp.cpp \
    /home/rene/Projects/erpc/erpc_c/setup/erpc_setup_mbf_dynamic.cpp \
    /home/rene/Projects/erpc/erpc_c/setup/erpc_server_setup.cpp \
